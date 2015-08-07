@@ -1,0 +1,6 @@
+paste (1.0) unstable; urgency=low
+
+  * Initial release of paste server.
+
+ -- David Fox <dsf@seereason.com>  Thu, 05 Sep 2013 06:03:32 -0700
+
