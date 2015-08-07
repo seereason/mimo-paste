@@ -12,16 +12,15 @@ Cabal-Version:      >=1.16
 
 flag local-mimo
   Description: Use local source for mimo instead of installed library
-  Default: True
+  Default: False
   Manual: True
 
 Executable paste-server
-  Default-Language:   Haskell2010
+  Default-Language: Haskell2010
   Hs-Source-Dirs: src
   if flag(local-mimo)
     Hs-Source-Dirs: ../mimo, ../mimo/Common
     Main-Is: ../mimo/Exec/Server.hs
-    Build-Depends: mimo
     Build-Depends:
       acid-state,
       applicative-extras,
@@ -33,6 +32,7 @@ Executable paste-server
       haskell-src-exts,
       ixset,
       jmacro,
+      mimo,
       reform,
       safecopy,
       syb,
@@ -69,12 +69,29 @@ Executable paste-server
 Executable paste-backups
   Default-Language: Haskell2010
   Hs-Source-Dirs: src
+  GHC-Options: -O2 -threaded -Wall
   Build-Depends:
+    archive,
+    base < 5,
+    Cabal,
+    containers,
+    data-default,
+    happstack-authenticate,
+    happstack-foundation,
+    hsp,
+    lens,
+    mtl,
     mtl-unleashed,
+    network-uri >= 2.6,
     seereason-ports,
+    template-haskell,
+    text,
     th-context,
+    th-desugar,
     th-path,
-    th-typegraph
+    th-typegraph,
+    time,
+    time-locale-compat
   if flag(local-mimo)
     Main-Is: ../../mimo/Exec/Backups.hs
     Hs-Source-Dirs: ../mimo, ../mimo/Common
@@ -96,26 +113,6 @@ Executable paste-backups
     Main-Is: /usr/share/mimo/Exec/Backups.hs
     Build-Depends: mimo
     Hs-Source-Dirs: /usr/share/mimo/Common
-  GHC-Options: -O2 -threaded -Wall
-  Build-depends:
-    archive,
-    base < 5,
-    Cabal,
-    containers,
-    data-default,
-    happstack-authenticate,
-    happstack-foundation,
-    hsp,
-    lens,
-    mtl,
-    network-uri >= 2.6,
-    template-haskell,
-    text,
-    th-desugar,
-    time,
-    time-locale-compat
-  if !flag(local-mimo)
-    Build-Depends: mimo
 
 test-suite mimo-tests
   Buildable: False

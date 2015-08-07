@@ -1,0 +1,52 @@
+instance EmbedAsChild App' Paste
+    where asChild x = asChild (view viewLens x :: Paste') :: GenChildList App'
+instance EmbedAsChild App' Paste'
+    where asChild x = (\(Paste' _a₁
+                                _a₂
+                                _a₃
+                                _a₄
+                                _a₅
+                                _a₆) -> asChild ((elt "ul" <@ ("class" := "Paste'.Paste'" :: Attr AppText
+                                                                                                  AppText)) <<: (map (\(fname,
+                                                                                                                        x) -> asChild ((elt "li" <@ ("class" := fname :: Attr AppText
+                                                                                                                                                                              AppText)) <: x)) (zip ["_a\8321",
+                                                                                                                                                                                                     "_a\8322",
+                                                                                                                                                                                                     "_a\8323",
+                                                                                                                                                                                                     "_a\8324",
+                                                                                                                                                                                                     "_a\8325",
+                                                                                                                                                                                                     "_a\8326"] [asChild (((elt "span" <@ ("class" := "Paste'.Paste'.pasteId'" :: Attr AppText
+                                                                                                                                                                                                                                                                                       AppText)) <: fromStringLit "Paste Id': ") <: (asChild _a₁ :: GenChildList App')),
+                                                                                                                                                                                                                 asChild (((elt "span" <@ ("class" := "Paste'.Paste'.title'" :: Attr AppText
+                                                                                                                                                                                                                                                                                     AppText)) <: fromStringLit "Title': ") <: (asChild _a₂ :: GenChildList App')),
+                                                                                                                                                                                                                 asChild (((elt "span" <@ ("class" := "Paste'.Paste'.nickname'" :: Attr AppText
+                                                                                                                                                                                                                                                                                        AppText)) <: fromStringLit "Nickname': ") <: (asChild _a₃ :: GenChildList App')),
+                                                                                                                                                                                                                 asChild (((elt "span" <@ ("class" := "Paste'.Paste'.format'" :: Attr AppText
+                                                                                                                                                                                                                                                                                      AppText)) <: fromStringLit "Format': ") <: (asChild _a₄ :: GenChildList App')),
+                                                                                                                                                                                                                 asChild (((elt "span" <@ ("class" := "Paste'.Paste'.pasted'" :: Attr AppText
+                                                                                                                                                                                                                                                                                      AppText)) <: fromStringLit "Pasted': ") <: (asChild _a₅ :: GenChildList App')),
+                                                                                                                                                                                                                 asChild (((elt "span" <@ ("class" := "Paste'.Paste'.paste'" :: Attr AppText
+                                                                                                                                                                                                                                                                                     AppText)) <: fromStringLit "Paste': ") <: (asChild _a₆ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
+instance EmbedAsChild App' PasteId
+    where asChild x = (\(PasteId _a₁) -> asChild ((elt "span" <@ ("class" := "PasteId.PasteId._a\8321" :: Attr AppText
+                                                                                                               AppText)) <: asChild (((elt "span" <@ ("class" := "PasteId.PasteId.unPasteId" :: Attr AppText
+                                                                                                                                                                                                     AppText)) <: fromStringLit "Un Paste Id: ") <: (asChild _a₁ :: GenChildList App')))) x :: GenChildList App'
+instance EmbedAsChild App' PasteMeta
+    where asChild x = (\(PasteMeta _a₁
+                                   _a₂
+                                   _a₃
+                                   _a₄) -> asChild ((elt "ul" <@ ("class" := "PasteMeta.PasteMeta" :: Attr AppText
+                                                                                                           AppText)) <<: (map (\(fname,
+                                                                                                                                 x) -> asChild ((elt "li" <@ ("class" := fname :: Attr AppText
+                                                                                                                                                                                       AppText)) <: x)) (zip ["_a\8321",
+                                                                                                                                                                                                              "_a\8322",
+                                                                                                                                                                                                              "_a\8323",
+                                                                                                                                                                                                              "_a\8324"] [asChild (((elt "span" <@ ("class" := "PasteMeta.PasteMeta.title" :: Attr AppText
+                                                                                                                                                                                                                                                                                                   AppText)) <: fromStringLit "Title: ") <: (asChild _a₁ :: GenChildList App')),
+                                                                                                                                                                                                                          asChild (((elt "span" <@ ("class" := "PasteMeta.PasteMeta.nickname" :: Attr AppText
+                                                                                                                                                                                                                                                                                                      AppText)) <: fromStringLit "Nickname: ") <: (asChild _a₂ :: GenChildList App')),
+                                                                                                                                                                                                                          asChild (((elt "span" <@ ("class" := "PasteMeta.PasteMeta.format" :: Attr AppText
+                                                                                                                                                                                                                                                                                                    AppText)) <: fromStringLit "Format: ") <: (asChild _a₃ :: GenChildList App')),
+                                                                                                                                                                                                                          asChild (((elt "span" <@ ("class" := "PasteMeta.PasteMeta.pasted" :: Attr AppText
+                                                                                                                                                                                                                                                                                                    AppText)) <: fromStringLit "Pasted: ") <: (asChild _a₄ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
+instance EmbedAsChild App' TextFormat
+    where asChild x = asChild (show x) :: GenChildList App'
