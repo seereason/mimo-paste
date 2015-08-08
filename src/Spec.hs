@@ -8,6 +8,7 @@ import Happstack.Authenticate.Core (UserId(UserId))
 import MIMO.Base (version)
 import MIMO.Spec (Spec(..))
 import qualified Ports (paste)
+import Types
 
 spec :: Spec
 spec = Spec { siteName = "Paste"
@@ -24,4 +25,5 @@ spec = Spec { siteName = "Paste"
             , siteAdmin = "logic@seereason.com"
             , siteParent = "/srv"
             , siteBackupsDir = "/srv/backups"
-            , siteBackupsUser = "upload" }
+            , siteBackupsUser = "upload"
+            , siteRowTypes = [''Paste, ''PasteMeta] }

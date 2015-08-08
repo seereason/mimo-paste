@@ -24,5 +24,4 @@ theAppInfo
           let f name | name == ''Paste = [''UTCTime]
               f _ = []
           in f
-      , _hints = hints
-      , _typeNames = [''Paste, ''PasteMeta] }
+      , _hints = hints }
