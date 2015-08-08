@@ -4,6 +4,11 @@ instance Updatable App (TextArea Text)
                                                                                                              0)))) x)) `transformEither` parse (fromMaybe (error ("fromMaybe at " ++ show (Loc "" "" "" (0,
                                                                                                                                                                                                          0) (0,
                                                                                                                                                                                                              0)))) x)) <++ errorList :: AppForm (TextArea Text)
+instance Updatable App TextFormat
+    where appForm = \x -> select [(y,
+                                   show y) | y <- [minBound..maxBound]] (== fromMaybe (error ("fromMaybe at " ++ show (Loc "" "" "" (0,
+                                                                                                                                     0) (0,
+                                                                                                                                         0)))) x) :: AppForm TextFormat
 instance Updatable App Paste
     where appForm x = (set viewLens <$> appForm (Just (view viewLens (fromMaybe (error ("fromMaybe at " ++ show (Loc "" "" "" (0,
                                                                                                                                0) (0,
@@ -32,11 +37,6 @@ instance Updatable App PasteMeta
                                                                                                                               AppForm PasteMeta) ((((pure PasteMeta <*> (\x -> mapView (\form -> [(elt "li" <: fromStringLit ("Title" ++ ": ")) <: form]) (appForm x)) (Just _a₁)) <*> (\x -> mapView (\form -> [(elt "li" <: fromStringLit ("Nickname" ++ ": ")) <: form]) (appForm x)) (Just _a₂)) <*> (\x -> mapView (\form -> [(elt "li" <: fromStringLit ("Format" ++ ": ")) <: form]) (appForm x)) (Just _a₃)) <*> (\x -> mapView (\form -> [(elt "li" <: fromStringLit ("Pasted" ++ ": ")) <: form]) (appForm x)) (Just _a₄)) :: Maybe PasteMeta ->
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         AppForm PasteMeta) x) :: Maybe PasteMeta ->
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  AppForm PasteMeta
-instance Updatable App TextFormat
-    where appForm = \x -> select [(y,
-                                   show y) | y <- [minBound..maxBound]] (== fromMaybe (error ("fromMaybe at " ++ show (Loc "" "" "" (0,
-                                                                                                                                     0) (0,
-                                                                                                                                         0)))) x) :: AppForm TextFormat
 instance Updatable App Text
     where appForm x = (inputText (unparse (fromMaybe (error ("fromMaybe at " ++ show (Loc "" "" "" (0,
                                                                                                     0) (0,
