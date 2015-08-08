@@ -7,22 +7,25 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
-module Types where
+module Stage0 where
 
 import Control.Lens(iso)
 import Data.Text (Text)
 import Data.Time.Clock (UTCTime)
-import Happstack.Authenticate.Core (UserId)
+import Distribution.License (License(..))
+import Happstack.Authenticate.Core (UserId(..))
 import Happstack.Foundation (Data, PathInfo, Typeable)
 import Language.Haskell.TH
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.Path.View (View(..))
 import Language.Haskell.TH.TypeGraph.Shape (fName)
 import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
-import MIMO.Base (TextFormat(..))
+import MIMO.App (AppInfo(..))
+import MIMO.Base (TextFormat(..), version)
 import MIMO.Hint (Hint(Flatten, HideColumn, Div, HideField, Link, TimeStamp), TextArea(..))
 import MIMO.Parsable ()
---import MIMO.Rec (KeyType(..))
+import MIMO.Spec (Spec(..))
+import Ports (paste)
 import Prelude hiding (pi)
 
 newtype PasteId = PasteId {unPasteId :: Integer} deriving (Enum, Eq, Ord, Show, Data, Typeable, PathInfo)
@@ -46,25 +49,6 @@ keyType :: Name -> KeyType
 keyType typeName | typeName == ''Paste = Private
 keyType _ = NoKey
 -}
-
-hints :: [StackElement] -> [Hint]
-hints =
-    concatMap hints'
-    where
-      hints' (StackElement fld _con dec) = decHints dec ++ fieldHints fld
-      decHints (TySynD _ _ _) = []
-      decHints (NewtypeD _ name _ _ _) = typeNameHints name
-      decHints (DataD _ name _ _ _) = typeNameHints name
-      decHints _ = []
-      typeNameHints x | x == ''PasteMeta = [Flatten]
-      typeNameHints _ = []
-      fieldHints fld =
-          case fName fld of
-            Right x | x == 'paste -> [HideColumn, Div]
-            Right x | x == 'pasteId -> [HideField]
-            Right x | x == 'title -> [Link]
-            Right x | x == 'pasted -> [TimeStamp]
-            _ -> []
 
 instance SinkType Text
 instance SinkType Integer
@@ -93,7 +77,7 @@ instance View Paste where
                  , format' = format (pasteMeta p)
                  , pasted' = pasted (pasteMeta p)
                  , pasteId' = pasteId p
-                 , paste' = TextArea (paste p) })
+                 , paste' = TextArea (Stage0.paste p) })
             (\v ->
                  Paste
                  { pasteId = pasteId' v
@@ -103,4 +87,57 @@ instance View Paste where
                      , nickname = nickname' v
                      , format = format' v
                      , pasted = pasted' v }
-                 , paste = _unTextArea (paste' v) })
+                 , Stage0.paste = _unTextArea (paste' v) })
+
+theAppInfo :: AppInfo
+theAppInfo
+    = AppInfo
+      { _spec = theSpec
+      , _idField =
+          let f n | n == ''Paste = Just (''PasteId, 'pasteId)
+              f n | n == ''PasteMeta = Nothing
+              f _ = Nothing
+          in f
+      , _indexTypes =
+          let f name | name == ''Paste = [''UTCTime]
+              f _ = []
+          in f
+      , _hints = theHints }
+
+theSpec :: Spec
+theSpec =
+    Spec { siteName = "Paste"
+         , siteVersion = version "1.2.3"
+         , siteHomepage = "homepage"
+         , siteAuthor = "author"
+         , siteLicense = PublicDomain
+         , siteSynopsis = "synopsis"
+         , siteDescription = "description"
+         , siteOwner = UserId 1
+         , siteDomain = "algebrazam.com"
+         , siteTestHost = Nothing
+         , sitePorts = Ports.paste
+         , siteAdmin = "logic@seereason.com"
+         , siteParent = "/srv"
+         , siteBackupsDir = "/srv/backups"
+         , siteBackupsUser = "upload"
+         , siteRowTypes = [''Paste, ''PasteMeta] }
+
+theHints :: [StackElement] -> [Hint]
+theHints =
+    concatMap hints'
+    where
+      hints' (StackElement fld _con dec) = decHints dec ++ fieldHints fld
+      decHints (TySynD _ _ _) = []
+      decHints (NewtypeD _ name _ _ _) = typeNameHints name
+      decHints (DataD _ name _ _ _) = typeNameHints name
+      decHints _ = []
+      typeNameHints x | x == ''PasteMeta = [Flatten]
+      typeNameHints _ = []
+      fieldHints fld =
+          case fName fld of
+            Right x | x == 'Stage0.paste -> [HideColumn, Div]
+            Right x | x == 'pasteId -> [HideField]
+            Right x | x == 'title -> [Link]
+            Right x | x == 'pasted -> [TimeStamp]
+            _ -> []

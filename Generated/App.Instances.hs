@@ -8,22 +8,22 @@ instance SafeCopy Paste
                                              safePut_PasteMeta arg;
                                              safePut_Text arg;
                                              return ()})
-          getCopy = contain (label "Types.Paste:" (do {safeGet_PasteId <- getSafeGet;
-                                                       safeGet_PasteMeta <- getSafeGet;
-                                                       safeGet_Text <- getSafeGet;
-                                                       ((return Paste <*> safeGet_PasteId) <*> safeGet_PasteMeta) <*> safeGet_Text}))
+          getCopy = contain (label "Stage0.Paste:" (do {safeGet_PasteId <- getSafeGet;
+                                                        safeGet_PasteMeta <- getSafeGet;
+                                                        safeGet_Text <- getSafeGet;
+                                                        ((return Paste <*> safeGet_PasteId) <*> safeGet_PasteMeta) <*> safeGet_Text}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Paste"
+          errorTypeName _ = "Stage0.Paste"
 instance SafeCopy PasteId
     where putCopy (PasteId arg) = contain (do {safePut_Integer <- getSafePut;
                                                safePut_Integer arg;
                                                return ()})
-          getCopy = contain (label "Types.PasteId:" (do {safeGet_Integer <- getSafeGet;
-                                                         return PasteId <*> safeGet_Integer}))
+          getCopy = contain (label "Stage0.PasteId:" (do {safeGet_Integer <- getSafeGet;
+                                                          return PasteId <*> safeGet_Integer}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.PasteId"
+          errorTypeName _ = "Stage0.PasteId"
 instance SafeCopy PasteMeta
     where putCopy (PasteMeta arg
                              arg
@@ -36,13 +36,13 @@ instance SafeCopy PasteMeta
                                                  safePut_TextFormat arg;
                                                  safePut_UTCTime arg;
                                                  return ()})
-          getCopy = contain (label "Types.PasteMeta:" (do {safeGet_Text <- getSafeGet;
-                                                           safeGet_TextFormat <- getSafeGet;
-                                                           safeGet_UTCTime <- getSafeGet;
-                                                           (((return PasteMeta <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_TextFormat) <*> safeGet_UTCTime}))
+          getCopy = contain (label "Stage0.PasteMeta:" (do {safeGet_Text <- getSafeGet;
+                                                            safeGet_TextFormat <- getSafeGet;
+                                                            safeGet_UTCTime <- getSafeGet;
+                                                            (((return PasteMeta <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_TextFormat) <*> safeGet_UTCTime}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.PasteMeta"
+          errorTypeName _ = "Stage0.PasteMeta"
 instance Default Paste
     where def = Paste def def def
 instance Default Paste'
