@@ -1,10 +1,10 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-module Stage2 where
+module Stage2Def where
 
--- import Stage0
-import App.Stage1 (App')
+-- import Stage1Def
+import Stage1Gen (App')
 import Data.Time (UTCTime)
 import HSP (EmbedAsChild(asChild))
 import MIMO.ListForm (Column(Column))

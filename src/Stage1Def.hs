@@ -7,7 +7,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
-module Stage0 where
+module Stage1Def where
 
 import Control.Lens(iso)
 import Data.Text (Text)
@@ -77,7 +77,7 @@ instance View Paste where
                  , format' = format (pasteMeta p)
                  , pasted' = pasted (pasteMeta p)
                  , pasteId' = pasteId p
-                 , paste' = TextArea (Stage0.paste p) })
+                 , paste' = TextArea (Stage1Def.paste p) })
             (\v ->
                  Paste
                  { pasteId = pasteId' v
@@ -87,7 +87,7 @@ instance View Paste where
                      , nickname = nickname' v
                      , format = format' v
                      , pasted = pasted' v }
-                 , Stage0.paste = _unTextArea (paste' v) })
+                 , Stage1Def.paste = _unTextArea (paste' v) })
 
 theAppInfo :: AppInfo
 theAppInfo
@@ -136,7 +136,7 @@ theHints =
       typeNameHints _ = []
       fieldHints fld =
           case fName fld of
-            Right x | x == 'Stage0.paste -> [HideColumn, Div]
+            Right x | x == 'Stage1Def.paste -> [HideColumn, Div]
             Right x | x == 'pasteId -> [HideField]
             Right x | x == 'title -> [Link]
             Right x | x == 'pasted -> [TimeStamp]
