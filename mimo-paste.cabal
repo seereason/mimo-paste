@@ -82,11 +82,14 @@ Executable paste-backups
     mtl,
     mtl-unleashed,
     network-uri >= 2.6,
+    safecopy,
     seereason-ports,
+    syb,
     template-haskell,
     text,
     th-context,
     th-desugar,
+    th-orphans,
     th-path,
     th-typegraph,
     time,
@@ -104,9 +107,6 @@ Executable paste-backups
       haskell-src-exts,
       ixset,
       reform,
-      safecopy,
-      syb,
-      th-orphans,
       unix
   else
     Main-Is: /usr/share/mimo/Exec/Backups.hs
