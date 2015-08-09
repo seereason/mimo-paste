@@ -76,7 +76,7 @@ instance Row Paste
                                              mkDiv x = map (\f -> f x) [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensPaste x :: Text) x))))] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Paste)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Paste)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Paste)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Paste)
