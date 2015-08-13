@@ -18,29 +18,6 @@ flag local-mimo
 Executable paste-server
   Default-Language: Haskell2010
   Hs-Source-Dirs: src
-  if flag(local-mimo)
-    Hs-Source-Dirs: ../mimo, ../mimo/Common
-    Main-Is: ../mimo/Exec/Server.hs
-    Build-Depends:
-      acid-state,
-      applicative-extras,
-      data-default-instances-base,
-      data-default-instances-containers,
-      directory,
-      filepath,
-      happstack-jmacro,
-      haskell-src-exts,
-      ixset,
-      jmacro,
-      reform,
-      safecopy,
-      syb,
-      th-orphans,
-      unix
-  else
-    Hs-Source-Dirs: /usr/share/mimo/Common
-    Main-Is: /usr/share/mimo/Exec/Server.hs
-    Build-Depends: mimo
   GHC-Options: -O2 -threaded -Wall
   Build-Depends:
       base < 5,
@@ -64,6 +41,30 @@ Executable paste-server
       th-typegraph,
       time,
       time-locale-compat
+  if flag(local-mimo)
+    Hs-Source-Dirs: ../mimo, ../mimo/Common
+    Main-Is: ../mimo/Exec/Server.hs
+    Build-Depends:
+      acid-state,
+      applicative-extras,
+      data-default-instances-base,
+      data-default-instances-containers,
+      directory,
+      filepath,
+      happstack-jmacro,
+      haskell-src-exts,
+      ixset,
+      jmacro,
+      reform,
+      safecopy,
+      syb,
+      th-orphans,
+      unix,
+      web-routes
+  else
+    Hs-Source-Dirs: /usr/share/mimo/Common
+    Main-Is: /usr/share/mimo/Exec/Server.hs
+    Build-Depends: mimo
 
 Executable paste-backups
   Default-Language: Haskell2010
