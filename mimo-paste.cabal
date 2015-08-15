@@ -19,6 +19,10 @@ Executable paste-server
   Default-Language: Haskell2010
   Hs-Source-Dirs: src
   GHC-Options: -O2 -threaded -Wall
+  Other-Modules:
+    Stage1Def
+    Stage2aDef
+    Stage2bDef
   Build-Depends:
       base < 5,
       Cabal,
