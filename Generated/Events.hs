@@ -16,4 +16,6 @@ deletePasteEvent p = do {cvs <- get;
                          put cvs{pastes = delete p (pastes cvs)}}
 somePastesEvent :: Int -> Int -> Query AppState ([Paste])
 somePastesEvent limit offset = do {cvs <- ask;
-                                   return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy UTCTime) (pastes cvs)))}
+                                   return $ ((if limit > 1
+                                               then take limit
+                                               else id) $ (drop offset $ toDescList (Proxy :: Proxy UTCTime) (pastes cvs)))}

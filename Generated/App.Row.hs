@@ -65,17 +65,17 @@ instance Row Paste
                                                                                                                                                                                                                                                               AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
                                                                                                                                                                                                                                                                                                                                            AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdatePaste xid) :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                                                                                                             (AppURLType Paste))) <: fromStringLit ("update this " ++ "Paste"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Paste Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensPasteId x :: PasteId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Title:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensTitle) x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Nickname:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensNickname) x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Format:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensFormat) x :: TextFormat) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Pasted:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensPasted) x :: UTCTime) x))] :: [GenChildList (AppType' Paste)]
-                                             mkDiv x = map (\f -> f x) [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensPaste x :: Text) x))))] :: [GenChildList (AppType' Paste)]}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Paste Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensPasteId x :: PasteId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Title:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensTitle) x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Nickname:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensNickname) x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Format:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensFormat) x :: TextFormat) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Pasted:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view (lensPasteMeta . lensPasted) x :: UTCTime) x))] :: [GenChildList (AppType' Paste)]
+                                             mkDiv x' = map (\f -> f x') [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensPaste x :: Text) x))))] :: [GenChildList (AppType' Paste)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Paste
