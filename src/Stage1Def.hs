@@ -3,6 +3,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell #-}
@@ -23,6 +24,7 @@ import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
 import MIMO.App (AppInfo(..))
 import MIMO.Base (TextFormat(..), version)
 import MIMO.Hint (Hint(Flatten, HideColumn, Div, HideField, Link, TimeStamp), TextArea(..))
+import MIMO.Id (IdField(idField, idFieldType, idFieldOf))
 import MIMO.Parsable ()
 import MIMO.Spec (Spec(..))
 import Ports (paste)
@@ -93,16 +95,16 @@ theAppInfo :: AppInfo
 theAppInfo
     = AppInfo
       { _spec = theSpec
-      , _idField =
-          let f n | n == ''Paste = Just (''PasteId, 'pasteId)
-              f n | n == ''PasteMeta = Nothing
-              f _ = Nothing
-          in f
       , _indexTypes =
           let f name | name == ''Paste = [''UTCTime]
               f _ = []
           in f
       , _hints = theHints }
+
+instance IdField Paste PasteId where
+    idField _ = [|pasteId|]
+    idFieldType _ = [t|PasteId|]
+    idFieldOf _ = [t|Paste|]
 
 theSpec :: Spec
 theSpec =
