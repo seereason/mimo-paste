@@ -5,7 +5,7 @@ instance Row Paste
           type AppFormType Paste = AppForm
           type IdType Paste = PasteId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetPasteByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomePastes)) (\x -> do {xid <- update (CreatePasteEvent x);
                                                                                                           seeOtherURL (AppURL (ViewPaste xid))})) Nothing (createForm' frm :: AppFormType Paste
@@ -19,7 +19,7 @@ instance Row Paste
                                                                                                                                                                                        (Maybe ([Paste])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetPasteByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomePastes)) (\x' -> do {xid' <- update (UpdatePasteEvent x');
                                                                                                               seeOtherURL (AppURL (ViewPaste xid'))})) Nothing (updateForm' frm :: AppFormType Paste
                                                                                                                                                                                                (Maybe Paste))}
