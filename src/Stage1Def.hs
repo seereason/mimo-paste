@@ -20,11 +20,11 @@ import Language.Haskell.TH
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.Path.View (View(..))
 import Language.Haskell.TH.TypeGraph.Shape (fName)
-import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
+import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStack(_typeStack))
 import MIMO.App (AppInfo(..))
 import MIMO.Base (TextFormat(..), version)
 import MIMO.Hint (Hint(Flatten, HideColumn, Div, HideField, Link, TimeStamp), TextArea(..))
-import MIMO.Id (IdField(idField, idFieldType, idFieldOf))
+import MIMO.Id (IdField(idField))
 import MIMO.Parsable ()
 import MIMO.Spec (Spec(..))
 import Ports (paste)
@@ -103,8 +103,6 @@ theAppInfo
 
 instance IdField Paste PasteId where
     idField _ = [|pasteId|]
-    idFieldType _ = [t|PasteId|]
-    idFieldOf _ = [t|Paste|]
 
 theSpec :: Spec
 theSpec =
@@ -125,9 +123,9 @@ theSpec =
          , siteBackupsUser = "upload"
          , siteRowTypes = [''Paste, ''PasteMeta] }
 
-theHints :: [StackElement] -> [Hint]
+theHints :: TypeStack -> [Hint]
 theHints =
-    concatMap hints'
+    concatMap hints' . _typeStack
     where
       hints' (StackElement fld _con dec) = decHints dec ++ fieldHints fld
       decHints (TySynD _ _ _) = []

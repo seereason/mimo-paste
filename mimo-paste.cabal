@@ -15,6 +15,11 @@ flag local-mimo
   Default: False
   Manual: True
 
+flag local-th-path
+  Description: Use local source for th-path, th-context, and th-typegraph instead of installed libraries
+  Default: False
+  Manual: True
+
 Executable paste-server
   Default-Language: Haskell2010
   Hs-Source-Dirs: src
@@ -69,6 +74,14 @@ Executable paste-server
     Hs-Source-Dirs: /usr/share/mimo/Common
     Main-Is: /usr/share/mimo/Exec/Server.hs
     Build-Depends: mimo
+  if flag(local-th-path)
+    Hs-Source-Dirs: ../th-path, ../th-context, ../th-typegraph
+    Build-Depends: base-compat, th-kinds, ListLike, set-extra
+  else
+    Build-Depends:
+      th-context,
+      th-path,
+      th-typegraph >= 0.29
 
 Executable paste-backups
   Default-Language: Haskell2010
@@ -117,6 +130,14 @@ Executable paste-backups
     Main-Is: /usr/share/mimo/Exec/Backups.hs
     Build-Depends: mimo
     Hs-Source-Dirs: /usr/share/mimo/Common
+  if flag(local-th-path)
+    Hs-Source-Dirs: ../th-path, ../th-context, ../th-typegraph
+    Build-Depends: base-compat, th-kinds, ListLike, set-extra
+  else
+    Build-Depends:
+      th-context,
+      th-path,
+      th-typegraph >= 0.29
 
 test-suite mimo-tests
   Buildable: False
