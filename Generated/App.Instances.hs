@@ -45,12 +45,12 @@ instance SafeCopy PasteMeta
           errorTypeName _ = "Stage1Def.PasteMeta"
 instance Default Paste
     where def = Paste def def def
-instance Default Paste'
-    where def = Paste' def def def def def def
 instance Default PasteId
     where def = PasteId def
 instance Default PasteMeta
     where def = PasteMeta def def def def
+instance Default PasteV
+    where def = PasteV def def def def def def
 instance Default Day
     where def = ModifiedJulianDay def
 instance Default DiffTime

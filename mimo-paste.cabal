@@ -125,7 +125,8 @@ Executable paste-backups
       haskell-src-exts,
       ixset,
       reform,
-      unix
+      unix,
+      web-routes
   else
     Main-Is: /usr/share/mimo/Exec/Backups.hs
     Build-Depends: mimo
