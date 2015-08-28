@@ -24,7 +24,7 @@ import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStac
 import MIMO.App (AppInfo(..))
 import MIMO.Base (TextFormat(..), version)
 import MIMO.Hint (Hint(Flatten, HideColumn, Div, HideField, Link, TimeStamp), TextArea(..))
-import MIMO.Id (IdField(idField))
+import MIMO.Id (IdField(idField), makeIdType', makeIdInstances')
 import MIMO.Parsable ()
 import MIMO.Spec (Spec(..))
 import Ports (paste)
@@ -57,6 +57,8 @@ instance SinkType Integer
 instance SinkType UTCTime
 instance SinkType UserId
 
+$(makeIdType' "Paste'")
+
 -- | The Paste type, flattened for a better UI, and with the paste
 -- field wrapped with TextArea
 data Paste' =
@@ -68,6 +70,8 @@ data Paste' =
     , pasted' :: UTCTime
     , paste' :: TextArea Text
     } deriving (Show)
+
+$(makeIdInstances' ''Paste')
 
 instance View Paste where
     type ViewType Paste = Paste'
@@ -100,9 +104,6 @@ theAppInfo
               f _ = []
           in f
       , _hints = theHints }
-
-instance IdField Paste PasteId where
-    idField _ = [|pasteId|]
 
 theSpec :: Spec
 theSpec =
