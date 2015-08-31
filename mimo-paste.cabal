@@ -56,6 +56,7 @@ Executable paste-server
     Build-Depends:
       acid-state,
       applicative-extras,
+      clckwrks,
       data-default-instances-base,
       data-default-instances-containers,
       directory,
@@ -69,6 +70,8 @@ Executable paste-server
       syb,
       th-orphans,
       unix,
+      uuid,
+      uuid-types,
       web-routes
   else
     Hs-Source-Dirs: /usr/share/mimo/Common
@@ -118,6 +121,7 @@ Executable paste-backups
     Build-Depends:
       acid-state,
       applicative-extras,
+      clckwrks,
       data-default-instances-base,
       data-default-instances-containers,
       directory,
@@ -126,6 +130,8 @@ Executable paste-backups
       ixset,
       reform,
       unix,
+      uuid,
+      uuid-types,
       web-routes
   else
     Main-Is: /usr/share/mimo/Exec/Backups.hs
