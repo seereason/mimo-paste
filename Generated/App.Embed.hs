@@ -1,3 +1,5 @@
+instance EmbedAsChild App' TextFormat
+    where asChild x = asChild (show x) :: GenChildList App'
 instance EmbedAsChild App' Paste
     where asChild x = asChild (view viewLens x :: PasteV) :: GenChildList App'
 instance EmbedAsChild App' PasteId
@@ -48,5 +50,3 @@ instance EmbedAsChild App' PasteV
                                                                                                                                                                                                                                                                                       AppText)) <: fromStringLit "Pasted': ") <: (asChild _a₅ :: GenChildList App')),
                                                                                                                                                                                                                  asChild (((elt "span" <@ ("class" := "PasteV.PasteV.paste'" :: Attr AppText
                                                                                                                                                                                                                                                                                      AppText)) <: fromStringLit "Paste': ") <: (asChild _a₆ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
-instance EmbedAsChild App' TextFormat
-    where asChild x = asChild (show x) :: GenChildList App'
