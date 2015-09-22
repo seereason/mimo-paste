@@ -71,6 +71,7 @@ Executable paste-server
       th-orphans,
       unix,
       uuid,
+      uuid-orphans,
       uuid-types,
       web-routes
   else
