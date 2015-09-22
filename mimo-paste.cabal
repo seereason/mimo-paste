@@ -131,7 +131,7 @@ Executable paste-backups
       ixset,
       reform,
       unix,
-      uuid,
+      uuid-orphans,
       uuid-types,
       web-routes
   else
